@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!--If user is logged in return home page otherwise return log in screen-->
+{% if user.is_authenticated %}
+
+  {% include 'sidebar.html' %}
+  <h1>Content</h1>
+
+
+{% else %}
+
+<!-- Centered Login Form -->
+<br/>
+<br/>
+<div class="d-flex justify-content-center align-items-center container">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Sign in to ASR Explorer App</h5>
+        <br/>
+        <form method="POST" action="{% url 'home' %}">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" name="email"
+                   placeholder="Your Company Email">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-control" name="password"
+                   placeholder="Password">
+            {% if messages %}
+              {% for message in messages %}
+                <br/>
+                <div class="alert alert-warning" role="alert">
+                {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+          </div>
+          <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}
